@@ -1,4 +1,4 @@
-# GAL-LINE: How to Make a Very Serious Game in JavaScript
+# GAL-LINE: How to Make a Very Serious Game With JavaScript
 
 ### A book about making a commercial web game, written while making the game.
 
