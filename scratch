@@ -1,0 +1,109 @@
+di cosa voglio parlare nell'intro:
+
+
+- a cosa serve il libro
+- per chi è il libro
+- il concetto di open development
+- il concetto di simple software
+- ideazione del gioco e com'è il concept generale
+
+Part 1: Rushing to a playable concept.
+
+capitolo 1 getting started
+creiamo la cartella.
+ci mettiamo dentro index.html
+lo apriamo con il browser e con un editor di testo.
+iniziamo: il contenuto del file html, boilerplate presentato rapidamente e creazione del canvas.
+assets/style.css parliamo delle classi, degli id etc nel dom e andiamo 
+a fare le due tre regolette base per partire.
+lezioncina sulla risoluzione interna vs la dimensione del canvas e src/main.js
+
+capitolo 2 defining inputs and outputs. the camera.
+mostriamo il file di configurazione e ne spieghiamo la struttura.
+disegnamo lo sprite sul canvas, la gamba, la linea gialla lo sfondo.
+iniziamo a prendere gli input dell'utente per muovere una camera sullo schermo, mantenendo le posizioni degli
+oggetti fermi e applicando la camera alle cose.
+
+capitolo 3 game loop and reading input
+
+il frame rate è variabile, implementiamo il game loop e lo spieghiamo
+astraiamo i comandi e otteniamo l'oggetto Input e l oggetto DeviceRegistry
+
+capitolo 3 implementing animations
+disegnamo lo sprite con l'animazione giusta e spieghiamo bene l'architettura di rendering scelta
+gia che ci siamo creiamo anche sprite senza animazione che è ancora piu easy
+now we need gameplay!!
+
+capitolo 4 it's time for fighting
+proper vector class
+we implement the spawning of a leg, the fight and the death of both the chicken or the leg.
+when we win we show that it is a problem to switch states and all, so we now have to problems:
+1. the state switching for losing and all to which we now put a patch to end the chapter with a playable game
+2. the fact that the gameplay code is pretty confused.
+
+Part 2: The big refactor
+
+capitolo 5 physics system
+- physics system that consumes the positions and hitboxes from a Config.gameData and all the speeds of objects.
+
+capitolo 6 render and animations are separate things!
+so if i have an animationsystem i can effectively register there just the animation and then the animation
+shares Renderer.Image with the sprite in the renderer so effectively the renderer only treats pos and images.
+now animations can have events linked to them, like ended or stuff
+- render system that consumes positions and gets fed images and does all the rendering and updating of animations
+in a more elegan way:
+> an optimization: we can make the renderer draw identical for all objects if they all have the same properties
+that is a correct abstraction of an image: Renderer.Image(img, offset, size);
+in the phase of update instead we have a separate array with the animations and update only them 
+so we never do ifs in the renderer.draw(). the updateAnimations method will update the animations in O(n) time.
+
+capitolo 7 state management and commands
+implementing a state management system which will be pretty hardcoded but will be able to have sub states.
+refactor all the state logic we had in a more concrete menu game.{ pause, walking, fighting } game-over
+on top of the old input system we want to have a commands abstraction which lets us define commands in the config
+and we create the commands and command sets abstractions and update game code, while adding the functionality
+menus, game over, pause ui etc get finally a bit of decency
+character selection is finally implemented
+
+capitolo 8 gluing all together
+abstracting the spawning of stuff, making the 
+physics simulation and the renderer run at different speeds inside the loop, and interpolating
+the positions using frame time.
+
+Part 3: Squeezing the game juices
+
+capitolo 9 make the fighting intense
+drawing the background planes and doing the parallax effect
+NB: the planes will then be satisfied by the fact that they fill be Renderer.InfiniteTilingImage(img, off, size)
+and off is the top left corner of the camera on each of the planes, divided by their z coordinate, which automatically
+implies the speed of scrolling. in this case the argument for this approach is that since they are 3D we are better off
+using 3D maths for the parallax. and it will be in this case that we will do z sorting of the things
+
+in this section the UI object we created at a certain point becomes better, it provides elements that we can use
+as for example progress bars, score etc.
+
+we start to add stuff on top of the fighting interactions to make it the feel a lot stronger.
+here to be defined
+
+capitolo 10 make the game fair
+legs spawning algorithm here we will make all the spawn timing better
+we balance all the difficulties tough one to do but shorter chapter
+adding a power up system to vary a bit the gameplay
+
+capitolo 11 Adding sounds
+now we start adding sounds to stuff and we do all the things
+
+Part 4: Final touches
+THINGS THAT MAY BECOME CHAPTERS
+
+- audio
+- particles
+- screen shake
+- save system
+- performance
+- asset pipeline
+- debugging
+- testing
+- deployment
+- mobile
+- accessibility
