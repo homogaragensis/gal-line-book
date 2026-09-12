@@ -2,7 +2,7 @@
 
 ### A book about making a commercial web game, written while making the game.
 
-[Read the book →](gal-line-book.github.io)  
+[Read the book →](https://homogaragensis.github.io/gal-line-book/)  
 [Source code →](github.com/homogaragensis/gal-line)  
 <!-- Play GAL-LINE → -->
 
